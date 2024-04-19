@@ -18,9 +18,29 @@
         echo $view->render('views/home-page.html');
     });
 
-    $f3 -> route('GET /order', function() {
+    $f3 -> route('GET|POST /order', function($f3) {
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            // Get data
+            $type = $_POST['type'];
+            $color = $_POST['color'];
+
+            if (empty($type)) {
+                echo "Please specify a pet type";
+            } else {
+                $f3 -> set('SESSION.petType', $type);
+                $f3 -> set('SESSION.petColor', $color);
+                $f3 -> reroute("summary");
+            }
+        }
         $view = new Template();
         echo $view -> render('views/pet-order.html');
+    });
+
+    $f3 -> route('GET /summary', function() {
+        $view = new Template();
+        echo $view -> render('views/order-summary.html');
     });
 
     $f3 -> run();
