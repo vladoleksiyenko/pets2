@@ -18,5 +18,10 @@
         echo $view->render('views/home-page.html');
     });
 
+    $f3 -> route('GET /order', function() {
+        $view = new Template();
+        echo $view -> render('views/pet-order.html');
+    });
+
     $f3 -> run();
 ?>
